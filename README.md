@@ -12,13 +12,14 @@ For full documentation and more details, please visit the official [claude-task-
 
 This repository is pre-configured to work with Task Master. Here's how to get started:
 
-### 1. Clone the Repository
+### 1. Clone the Repository & Install Dependencies
 
-Clone this repository to your local machine:
+Clone this repository to your local machine and install dependencies:
 
 ```bash
 git clone <repository-url>
 cd taskmaster-sample-app
+npm i
 ```
 
 ### 2. Configure API Keys
@@ -72,25 +73,26 @@ Once configured, you can start interacting with Task Master.
 
 **In Cursor:**
 
-*   "Initialize taskmaster-ai in my project"
-*   "What's the next task I should work on?"
-*   "Parse my PRD at .taskmaster/docs/prd.txt"
+- "Initialize taskmaster-ai in my project"
+- "What's the next task I should work on?"
+- "Parse my PRD at .taskmaster/docs/prd.txt"
 
 **Via CLI:**
 
-If you don't have it installed globally: `npm install -g task-master-ai`
+You can use `npx` to run Task Master commands without installing it globally. Here are a few examples:
 
-*   `task-master init`
-*   `task-master list`
-*   `task-master next`
+- `npx task-master list` - to show tasks to perform
+- `npx task-master models` - to show configured models
+- `npx task-master next` - to see the next suggested task
+- `npx task-master init` - to initialize task master in a new project
 
 ## Project Structure
 
-*   `.taskmaster/`: Contains Task Master specific files, such as tasks, reports, and documentation.
-    *   `docs/`: Place your Product Requirement Documents (PRDs) here.
-    *   `tasks/`: Where generated `tasks.json` and individual markdown task files are stored.
-*   `.cursor/`: Configuration for the Cursor editor.
-    *   `mcp.json`: (You may need to create this) MCP server configuration.
-    *   `rules/`: Contains rules for the AI to follow during development. This repo includes the standard Task Master rules.
-*   `.env.example`: Template for API keys for CLI usage.
-*   `package.json`: Project dependencies. This sample is a Next.js app.
+- `.taskmaster/`: Contains Task Master specific files, such as tasks, reports, and documentation.
+  - `docs/`: Place your Product Requirement Documents (PRDs) here.
+  - `tasks/`: Where generated `tasks.json` and individual markdown task files are stored.
+- `.cursor/`: Configuration for the Cursor editor.
+  - `mcp.json`: (You may need to create this) MCP server configuration.
+  - `rules/`: Contains rules for the AI to follow during development. This repo includes the standard Task Master rules.
+- `.env.example`: Template for API keys for CLI usage.
+- `package.json`: Project dependencies. This sample is a Next.js app.
