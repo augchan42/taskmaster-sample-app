@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Master Sample App
 
-## Getting Started
+This repository serves as a sample configuration for the [`claude-task-master`](https://github.com/eyaltoledano/claude-task-master) AI-powered task management system. It's designed to provide a ready-to-use example of how to structure your project to integrate with Task Master, especially within an environment like Cursor.
 
-First, run the development server:
+## About Task Master
+
+Task Master is an AI-powered task-management system you can drop into Cursor, Lovable, Windsurf, Roo, and others. It helps you manage your development workflow, from parsing product requirement documents to generating, assigning, and tracking tasks.
+
+For full documentation and more details, please visit the official [claude-task-master repository](https://github.com/eyaltoledano/claude-task-master).
+
+## How to Use This Sample
+
+This repository is pre-configured to work with Task Master. Here's how to get started:
+
+### 1. Clone the Repository
+
+Clone this repository to your local machine:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd taskmaster-sample-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure API Keys
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Task Master uses AI models from various providers, which require API keys. You need to provide your keys to use its AI-powered features.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### For CLI Usage
 
-## Learn More
+If you plan to use the `task-master` CLI directly, you'll need a `.env` file in the project root.
 
-To learn more about Next.js, take a look at the following resources:
+1.  Copy the example file:
+    ```bash
+    cp .env.example .env
+    ```
+2.  Edit the `.env` file and add your API keys.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### For Cursor (MCP Server) Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+For the best experience inside Cursor, you should configure the MCP (Model Control Protocol) server. This allows you to interact with Task Master through Cursor's chat and tools.
 
-## Deploy on Vercel
+1.  Create or open your project-specific MCP configuration file at `.cursor/mcp.json`.
+2.  Add the following configuration, filling in your API keys. You only need to add keys for the services you intend to use.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```json
+    {
+      "mcpServers": {
+        "taskmaster-ai": {
+          "command": "npx",
+          "args": ["-y", "--package=task-master-ai", "task-master-ai"],
+          "env": {
+            "ANTHROPIC_API_KEY": "YOUR_ANTHROPIC_API_KEY_HERE",
+            "PERPLEXITY_API_KEY": "YOUR_PERPLEXITY_API_KEY_HERE",
+            "OPENAI_API_KEY": "YOUR_OPENAI_KEY_HERE",
+            "GOOGLE_API_KEY": "YOUR_GOOGLE_KEY_HERE",
+            "MISTRAL_API_KEY": "YOUR_MISTRAL_KEY_HERE",
+            "OPENROUTER_API_KEY": "YOUR_OPENROUTER_KEY_HERE",
+            "XAI_API_KEY": "YOUR_XAI_KEY_HERE",
+            "AZURE_OPENAI_API_KEY": "YOUR_AZURE_KEY_HERE",
+            "OLLAMA_API_KEY": "YOUR_OLLAMA_API_KEY_HERE"
+          }
+        }
+      }
+    }
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3.  Enable the `taskmaster-ai` MCP server in Cursor's settings.
+
+### 3. Start Using Task Master
+
+Once configured, you can start interacting with Task Master.
+
+**In Cursor:**
+
+*   "Initialize taskmaster-ai in my project"
+*   "What's the next task I should work on?"
+*   "Parse my PRD at .taskmaster/docs/prd.txt"
+
+**Via CLI:**
+
+If you don't have it installed globally: `npm install -g task-master-ai`
+
+*   `task-master init`
+*   `task-master list`
+*   `task-master next`
+
+## Project Structure
+
+*   `.taskmaster/`: Contains Task Master specific files, such as tasks, reports, and documentation.
+    *   `docs/`: Place your Product Requirement Documents (PRDs) here.
+    *   `tasks/`: Where generated `tasks.json` and individual markdown task files are stored.
+*   `.cursor/`: Configuration for the Cursor editor.
+    *   `mcp.json`: (You may need to create this) MCP server configuration.
+    *   `rules/`: Contains rules for the AI to follow during development. This repo includes the standard Task Master rules.
+*   `.env.example`: Template for API keys for CLI usage.
+*   `package.json`: Project dependencies. This sample is a Next.js app.
