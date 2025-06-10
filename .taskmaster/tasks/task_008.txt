@@ -1,0 +1,11 @@
+# Task ID: 8
+# Title: Integrate 'list' Command with CLI
+# Status: pending
+# Dependencies: 4, 6
+# Priority: medium
+# Description: Connect the 'list' command logic to the CLI entry point. When a user runs `todo list`, the `listTasks` function should be executed.
+# Details:
+In `index.ts`, for the `list` command definition, add an `.action()` handler that calls the `listTasks()` function.
+
+# Test Strategy:
+Perform an end-to-end test. Manually create a `tasks.json` file with a few sample tasks. Run the command `node dist/index.js list` and verify that the console output correctly displays the tasks from the file.

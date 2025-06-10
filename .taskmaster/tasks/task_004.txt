@@ -1,0 +1,11 @@
+# Task ID: 4
+# Title: Implement 'list' Command Logic
+# Status: pending
+# Dependencies: 2
+# Priority: medium
+# Description: Implement the core logic for listing all tasks. This function will retrieve all tasks and format them for display.
+# Details:
+Create a function `listTasks(): Promise<void>`. This function will call `readTasks()` from the storage module. It will then iterate over the returned tasks and print each one to the console, formatted as `ID - [Status] Description`. For example: `1 - [pending] Buy milk`.
+
+# Test Strategy:
+Unit test the `listTasks` function. Mock `readTasks` to return a sample list of tasks with different statuses. Capture the console output and verify that it matches the expected format and content.

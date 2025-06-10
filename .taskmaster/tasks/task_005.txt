@@ -1,0 +1,11 @@
+# Task ID: 5
+# Title: Implement 'done' Command Logic
+# Status: pending
+# Dependencies: 2
+# Priority: medium
+# Description: Implement the core logic for marking a task as complete. This function will find a task by its ID and update its status.
+# Details:
+Create a function `completeTask(id: number): Promise<void>`. This function will call `readTasks()`, find the task with the matching `id`, and change its `status` to `'done'`. If no task with the given ID is found, it should log an error message. Finally, it will call `writeTasks()` with the modified task list.
+
+# Test Strategy:
+Unit test the `completeTask` function. Mock `readTasks` and `writeTasks`. Test the success case where a task is found and its status is updated. Test the failure case where the provided ID does not exist and ensure an appropriate error is logged and `writeTasks` is not called.

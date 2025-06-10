@@ -1,0 +1,11 @@
+# Task ID: 9
+# Title: Integrate 'done' Command with CLI
+# Status: pending
+# Dependencies: 5, 6
+# Priority: medium
+# Description: Connect the 'done' command logic to the CLI entry point. When a user runs `todo done <id>`, the `completeTask` function should be called with the ID.
+# Details:
+In `index.ts`, for the `done` command definition, add an `.action()` handler. This handler will receive the `id` string, which should be parsed into a number (`parseInt`) before being passed to the `completeTask(id)` function.
+
+# Test Strategy:
+Perform an end-to-end test. Add a task using the `add` command. Run `node dist/index.js done 1`. Use the `list` command to verify that the task's status has been updated to 'done' in the `tasks.json` file.

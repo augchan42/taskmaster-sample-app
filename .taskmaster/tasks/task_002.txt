@@ -1,0 +1,11 @@
+# Task ID: 2
+# Title: Implement Data Storage Module
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Create a dedicated module to handle all file system operations for task persistence. This module will be responsible for reading from and writing to the tasks.json file.
+# Details:
+Create a `storage.ts` file. It should export two functions: `readTasks(): Promise<Task[]>` and `writeTasks(tasks: Task[]): Promise<void>`. The module must handle the creation of the `.todo` directory in the user's home directory (`os.homedir()`) and the `tasks.json` file if they don't exist. Use `fs/promises` for asynchronous file operations to avoid blocking.
+
+# Test Strategy:
+Unit test the `readTasks` and `writeTasks` functions. Mock the `fs/promises` module to test scenarios like file not found (should return an empty array), existing file, and write success. Verify the correct file path is used.

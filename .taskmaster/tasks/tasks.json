@@ -1,0 +1,137 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Project Setup and Initialization",
+      "description": "Initialize a new Node.js project, set up TypeScript, and install initial dependencies. This includes creating package.json, tsconfig.json, and installing libraries for CLI argument parsing.",
+      "details": "Run `npm init -y`. Install `typescript`, `ts-node`, `@types/node`, and `commander`. Create a `tsconfig.json` file with appropriate settings for a Node.js project (e.g., `\"module\": \"commonjs\"`, `\"target\": \"es2020\"`, `\"outDir\": \"./dist\"`). Create a `src` directory for the source code.",
+      "testStrategy": "Verify that `package.json` and `tsconfig.json` are created correctly. Ensure that `npx tsc` compiles the project without errors. Check that all specified dependencies are listed in `package.json`.",
+      "priority": "high",
+      "dependencies": [],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 2,
+      "title": "Implement Data Storage Module",
+      "description": "Create a dedicated module to handle all file system operations for task persistence. This module will be responsible for reading from and writing to the tasks.json file.",
+      "details": "Create a `storage.ts` file. It should export two functions: `readTasks(): Promise<Task[]>` and `writeTasks(tasks: Task[]): Promise<void>`. The module must handle the creation of the `.todo` directory in the user's home directory (`os.homedir()`) and the `tasks.json` file if they don't exist. Use `fs/promises` for asynchronous file operations to avoid blocking.",
+      "testStrategy": "Unit test the `readTasks` and `writeTasks` functions. Mock the `fs/promises` module to test scenarios like file not found (should return an empty array), existing file, and write success. Verify the correct file path is used.",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 3,
+      "title": "Implement 'add' Command Logic",
+      "description": "Implement the core logic for adding a new task. This function will take a task description, create a new task object, and add it to the list of existing tasks.",
+      "details": "Create a function `addTask(description: string): Promise<void>`. This function will first call `readTasks()` from the storage module. It will then determine the new task's ID by finding the max existing ID and adding 1. A new task object `{ id, description, status: 'pending' }` will be created and appended to the array. Finally, it will call `writeTasks()` with the updated array.",
+      "testStrategy": "Unit test the `addTask` function. Provide a mock `readTasks` that returns a predefined list of tasks and verify that the new task is added correctly. Check that `writeTasks` is called with the expected new array. Test that the first task added has an ID of 1.",
+      "priority": "high",
+      "dependencies": [
+        2
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 4,
+      "title": "Implement 'list' Command Logic",
+      "description": "Implement the core logic for listing all tasks. This function will retrieve all tasks and format them for display.",
+      "details": "Create a function `listTasks(): Promise<void>`. This function will call `readTasks()` from the storage module. It will then iterate over the returned tasks and print each one to the console, formatted as `ID - [Status] Description`. For example: `1 - [pending] Buy milk`.",
+      "testStrategy": "Unit test the `listTasks` function. Mock `readTasks` to return a sample list of tasks with different statuses. Capture the console output and verify that it matches the expected format and content.",
+      "priority": "medium",
+      "dependencies": [
+        2
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 5,
+      "title": "Implement 'done' Command Logic",
+      "description": "Implement the core logic for marking a task as complete. This function will find a task by its ID and update its status.",
+      "details": "Create a function `completeTask(id: number): Promise<void>`. This function will call `readTasks()`, find the task with the matching `id`, and change its `status` to `'done'`. If no task with the given ID is found, it should log an error message. Finally, it will call `writeTasks()` with the modified task list.",
+      "testStrategy": "Unit test the `completeTask` function. Mock `readTasks` and `writeTasks`. Test the success case where a task is found and its status is updated. Test the failure case where the provided ID does not exist and ensure an appropriate error is logged and `writeTasks` is not called.",
+      "priority": "medium",
+      "dependencies": [
+        2
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 6,
+      "title": "Setup CLI Entry Point with Commander",
+      "description": "Set up the main CLI entry point using the 'commander' library. Define the commands `add`, `list`, and `done` with their expected arguments and options.",
+      "details": "Create an `index.ts` file. Import `Command` from `commander`. Set up the main program and define three commands: `program.command('add <description>')`, `program.command('list')`, and `program.command('done <id>')`. Parse the process arguments at the end of the file.",
+      "testStrategy": "Run the compiled script with `--help` to ensure all commands are listed correctly. Run each command with dummy arguments (e.g., `todo add 'test'`) and verify that the parser recognizes them without crashing.",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 7,
+      "title": "Integrate 'add' Command with CLI",
+      "description": "Connect the 'add' command logic to the CLI entry point. When a user runs `todo add \"...\"`, the `addTask` function should be called with the description.",
+      "details": "In `index.ts`, for the `add` command definition, add an `.action()` handler. This handler will receive the `description` string from the command-line arguments and will call the `addTask(description)` function.",
+      "testStrategy": "Perform an end-to-end test. Clear the `tasks.json` file. Run the command `node dist/index.js add \"My first task\"`. Manually inspect or use the `list` command to verify that the task was added correctly to the `tasks.json` file.",
+      "priority": "medium",
+      "dependencies": [
+        3,
+        6
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 8,
+      "title": "Integrate 'list' Command with CLI",
+      "description": "Connect the 'list' command logic to the CLI entry point. When a user runs `todo list`, the `listTasks` function should be executed.",
+      "details": "In `index.ts`, for the `list` command definition, add an `.action()` handler that calls the `listTasks()` function.",
+      "testStrategy": "Perform an end-to-end test. Manually create a `tasks.json` file with a few sample tasks. Run the command `node dist/index.js list` and verify that the console output correctly displays the tasks from the file.",
+      "priority": "medium",
+      "dependencies": [
+        4,
+        6
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 9,
+      "title": "Integrate 'done' Command with CLI",
+      "description": "Connect the 'done' command logic to the CLI entry point. When a user runs `todo done <id>`, the `completeTask` function should be called with the ID.",
+      "details": "In `index.ts`, for the `done` command definition, add an `.action()` handler. This handler will receive the `id` string, which should be parsed into a number (`parseInt`) before being passed to the `completeTask(id)` function.",
+      "testStrategy": "Perform an end-to-end test. Add a task using the `add` command. Run `node dist/index.js done 1`. Use the `list` command to verify that the task's status has been updated to 'done' in the `tasks.json` file.",
+      "priority": "medium",
+      "dependencies": [
+        5,
+        6
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 10,
+      "title": "Error Handling and UX Refinement",
+      "description": "Implement comprehensive error handling for user inputs and file operations, and refine the overall user experience with clearer output messages.",
+      "details": "Wrap file operations in `try...catch` blocks to handle potential file corruption or permission errors. Add validation for the `done` command to ensure the ID is a valid number. Add user-friendly messages, e.g., 'Task added successfully.', 'Task #1 marked as done.', 'Error: Task with ID 5 not found.'.",
+      "testStrategy": "Test edge cases: try to complete a non-existent task ID. Try to run `done` with a non-numeric argument. Attempt to read a malformed `tasks.json` file. Verify that the application handles these cases gracefully and provides clear, informative error messages to the user without crashing.",
+      "priority": "low",
+      "dependencies": [
+        7,
+        8,
+        9
+      ],
+      "status": "pending",
+      "subtasks": []
+    }
+  ]
+}

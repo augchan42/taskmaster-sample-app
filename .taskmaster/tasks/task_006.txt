@@ -1,0 +1,11 @@
+# Task ID: 6
+# Title: Setup CLI Entry Point with Commander
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Set up the main CLI entry point using the 'commander' library. Define the commands `add`, `list`, and `done` with their expected arguments and options.
+# Details:
+Create an `index.ts` file. Import `Command` from `commander`. Set up the main program and define three commands: `program.command('add <description>')`, `program.command('list')`, and `program.command('done <id>')`. Parse the process arguments at the end of the file.
+
+# Test Strategy:
+Run the compiled script with `--help` to ensure all commands are listed correctly. Run each command with dummy arguments (e.g., `todo add 'test'`) and verify that the parser recognizes them without crashing.

@@ -1,0 +1,11 @@
+# Task ID: 3
+# Title: Implement 'add' Command Logic
+# Status: pending
+# Dependencies: 2
+# Priority: high
+# Description: Implement the core logic for adding a new task. This function will take a task description, create a new task object, and add it to the list of existing tasks.
+# Details:
+Create a function `addTask(description: string): Promise<void>`. This function will first call `readTasks()` from the storage module. It will then determine the new task's ID by finding the max existing ID and adding 1. A new task object `{ id, description, status: 'pending' }` will be created and appended to the array. Finally, it will call `writeTasks()` with the updated array.
+
+# Test Strategy:
+Unit test the `addTask` function. Provide a mock `readTasks` that returns a predefined list of tasks and verify that the new task is added correctly. Check that `writeTasks` is called with the expected new array. Test that the first task added has an ID of 1.

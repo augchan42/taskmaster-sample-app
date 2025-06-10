@@ -1,0 +1,11 @@
+# Task ID: 7
+# Title: Integrate 'add' Command with CLI
+# Status: pending
+# Dependencies: 3, 6
+# Priority: medium
+# Description: Connect the 'add' command logic to the CLI entry point. When a user runs `todo add "..."`, the `addTask` function should be called with the description.
+# Details:
+In `index.ts`, for the `add` command definition, add an `.action()` handler. This handler will receive the `description` string from the command-line arguments and will call the `addTask(description)` function.
+
+# Test Strategy:
+Perform an end-to-end test. Clear the `tasks.json` file. Run the command `node dist/index.js add "My first task"`. Manually inspect or use the `list` command to verify that the task was added correctly to the `tasks.json` file.
