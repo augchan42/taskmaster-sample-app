@@ -1,0 +1,42 @@
+# Overview
+This document describes a simple command-line (CLI) To-Do list application. The application will allow users to add, view, and mark tasks as complete. It solves the problem of keeping track of daily tasks in a simple, fast, and local way.
+
+# Core Features
+- **Add a task:** Users can add a new task to their to-do list with a description.
+- **List all tasks:** Users can view all their tasks, showing their ID, description, and status (pending/done).
+- **Mark task as complete:** Users can mark a task as completed using its ID.
+- **Persistence:** Tasks should be saved to a local file (e.g., `tasks.json`) so they are not lost when the application closes.
+
+# User Experience
+The application will be used from the command line.
+- User flow for adding a task: `todo add "Buy milk"`
+- User flow for listing tasks: `todo list`
+- User flow for completing a task: `todo done 1`
+
+# Technical Architecture
+- **Language:** Node.js with TypeScript.
+- **Framework:** None, it's a simple CLI tool. We can use a library like `yargs` or `commander` for argument parsing.
+- **Data Storage:** A single JSON file (`.todo/tasks.json`) in the user's home directory to store the tasks.
+- **Data Model:**
+  - Task: `{ id: number, description: string, status: 'pending' | 'done' }`
+
+# Development Roadmap
+- **MVP:**
+  - Implement the `add`, `list`, and `done` commands.
+  - Basic JSON file storage.
+- **Future Enhancements:**
+  - Add a `remove` command.
+  - Add due dates or priorities.
+  - Prettier output formatting.
+
+# Logical Dependency Chain
+1.  Set up the basic project structure (package.json, tsconfig.json).
+2.  Implement the data storage module to read/write from the JSON file.
+3.  Implement the `add` command logic.
+4.  Implement the `list` command logic.
+5.  Implement the `done` command logic.
+6.  Wire everything up in a main CLI entry point using an argument parser.
+
+# Risks and Mitigations
+- **Risk:** Concurrent writes to the JSON file could corrupt it.
+- **Mitigation:** For this simple app, it's a low risk as it's a single-user CLI tool. We will read the file before each operation and write it back immediately. No complex file locking is needed for the MVP. 
